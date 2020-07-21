@@ -7,3 +7,15 @@ FROM PROFILES
 JOIN TENANCY_HISTORIES ON PROFILES.PROFILE_ID = TENANCY_HISTORIES.PROFILE_ID
 ORDER BY Duration DESC;
 
+
+2.SELECT first_name + ' ' + last_name AS Full_Name
+	,email
+	,phone
+	,TENANCY_HISTORIES.RENT
+FROM Profiles
+JOIN tenancy_histories ON Profiles.profile_id = tenancy_histories.profile_id
+WHERE TENANCY_HISTORIES.RENT > 9000
+	AND PROFILES.MARTIAL_STATUS = 'Y';
+
+
+
