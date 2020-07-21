@@ -102,3 +102,62 @@ FROM vw_tenant
 
 
 
+
+7.  UPDATE referrals
+SET valid_till = DATEADD(MM, 1, valid_till)
+WHERE referrer_id IN (
+		SELECT referrer_id
+		FROM referrals
+		GROUP BY referrer_id
+		HAVING COUNT(*) > 2
+		)
+
+select VALID_TILL from REFERRALS WHERE referrer_id IN (
+		SELECT referrer_id
+		FROM referrals
+		GROUP BY referrer_id
+		HAVING COUNT(*) > 2
+		)
+
+
+
+8. SELECT PROFILES.PROFILE_ID
+	,PROFILES.FIRST_NAME + ' ' + PROFILES.LAST_NAME AS Full_Name
+	,PROFILES.PHONE
+	,TENANCY_HISTORIES.RENT
+	,CASE 
+		WHEN rent > 10000
+			THEN 'GRADE A'
+		WHEN rent BETWEEN 7500
+				AND 10000
+			THEN 'GRADE B'
+		ELSE 'GRADE C'
+		END AS customer_segment
+FROM tenancy_histories
+JOIN PROFILES ON TENANCY_HISTORIES.PROFILE_ID = PROFILES.PROFILE_ID
+
+
+
+ 9. SELECT first_name + ' ' + last_name AS Full_Name
+	,profiles.phone
+	,profiles.city
+	,houses.bhk_details
+FROM profiles
+INNER JOIN tenancy_histories ON profiles.profile_id = tenancy_histories.profile_id
+INNER JOIN houses ON tenancy_histories.house_id = houses.house_id
+WHERE profiles.profile_id NOT IN (
+		SELECT referrer_id
+		FROM referrals
+		)
+
+
+10. SELECT TOP (1)
+WITH ties Addresses.house_id
+	,Addresses.name
+	,Houses.house_type
+	,Houses.bhk_details
+	,Houses.furnishing_type
+	,(Houses.bed_count - Houses.Beds_vacant) AS HIGHEST_OCCUPANCY
+FROM Addresses
+INNER JOIN Houses ON Addresses.house_id = Houses.house_id
+ORDER BY HIGHEST_OCCUPANCY DESC;
