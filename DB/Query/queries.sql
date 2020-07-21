@@ -52,3 +52,19 @@ ORDER BY rent DESC
 
 
 
+
+4.SELECT PROFILES.FIRST_NAME + ' ' + PROFILES.LAST_NAME AS Full_Name
+	,PROFILES.EMAIL
+	,PROFILES.PHONE
+	,PROFILES.REFERRAL_CODE
+	,sum(referrals.referrer_bonus_amount) AS Total_Bonus_Amount
+FROM REFERRALS
+JOIN PROFILES ON REFERRALS.REFERRER_ID = PROFILES.PROFILE_ID
+GROUP BY profiles.FIRST_NAME
+	,profiles.LAST_NAME
+	,profiles.EMAIL
+	,profiles.PHONE
+	,profiles.REFERRAL_CODE
+	,referrals.REFERRER_ID
+HAVING count(*) > 1
+
