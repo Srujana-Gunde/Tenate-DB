@@ -1,0 +1,48 @@
+
+	<?xml version="1.0" encoding="utf-8" ?>  
+<CodeSnippets  xmlns="https://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">  
+<_locDefinition xmlns="urn:locstudio">  
+    <_locDefault _loc="locNone" />  
+    <_locTag _loc="locData">Title</_locTag>  
+    <_locTag _loc="locData">Description</_locTag>  
+    <_locTag _loc="locData">Author</_locTag>  
+    <_locTag _loc="locData">ToolTip</_locTag>  
+   <_locTag _loc="locData">Default</_locTag>  
+</_locDefinition>  
+<CodeSnippet Format="1.0.0">  
+
+
+<Header>  
+<Title>Tenants who have referred more than once with bonus</Title>  
+                        <Shortcut></Shortcut>  
+<Description>snippet to find the full_name, email_id, phone number and referral code of all
+the tenants who have referred more than once.
+Also find the total bonus amount they should receive given that the bonus gets calculated
+only for valid referrals.</Description>  
+<Author>Srujana</Author>  
+<SnippetTypes>  
+                                <SnippetType>Expansion</SnippetType>  
+</SnippetTypes>  
+</Header> 
+
+
+<Snippet>  
+<Declarations>  
+                                <Literal>  
+                                <ID>PROFILES</ID>  
+                                <ID>REFERRALS</ID>  
+                                <ToolTip>Code to handle the caught error</ToolTip>  
+                                <Default>CatchCode</Default>  
+                                </Literal>  
+</Declarations>  
+<Code Language="SQL"><![CDATA[  
+select PROFILES.FIRST_NAME+ ' '+ PROFILES.LAST_NAME as Full_Name,PROFILES.EMAIL,PROFILES.PHONE,PROFILES.REFERRAL_CODE,sum(referrals.referrer_bonus_amount)as Total_Bonus_Amount FROM REFERRALS  
+ join PROFILES
+on  REFERRALS.REFERRER_ID = PROFILES.PROFILE_ID  group by profiles.FIRST_NAME,profiles.LAST_NAME,profiles.EMAIL,profiles.PHONE,profiles.REFERRAL_CODE,
+referrals.REFERRER_ID having count(*)>1  
+]]>  
+</Code>  
+</Snippet>  
+</CodeSnippet>  
+</CodeSnippets>
+ 
