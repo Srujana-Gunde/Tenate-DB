@@ -1,3 +1,3 @@
 # Tenate-DB
  
-1. Creating a Tenate Data base
+Created Database Tenate 
