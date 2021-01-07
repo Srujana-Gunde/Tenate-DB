@@ -1,3 +1,3 @@
-# Tenate-DB
+# Tenant-DB
  
 Created Database Tenate 
